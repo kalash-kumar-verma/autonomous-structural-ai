@@ -70,26 +70,31 @@ autonomous-structural-ai/
 
 ## ⚡ Quick Start
 
-### 1. Install dependencies
+### 1. Git Clone
+```bash
+git clone https://github.com/joysarkar83/autonomous-structural-ai.git
+cd autonomous-structural-ai
+```
+
+### 2. Virtual Environment (Not mandatory but recommended)
+```bash
+python -m venv venv
+On Linux or Mac: source venv/bin/activate
+On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 3. Backend
 ```bash
 cd backend
 pip install -r ../requirements.txt
-```
-
-### 2. Start the backend
-```bash
-cd backend
 python -m uvicorn app:app --reload
 ```
 
-### 3. Open the frontend
+### 4. Frontend
 ```bash
-# Option A: Python simple server (from project root)
+cd ../frontend
 python -m http.server 5500
-
-# Option B: VS Code Live Server (open frontend/index.html)
-
-# Option C: Direct file open (may have CORS issues — use server option)
 ```
 
 Open `http://localhost:5500` in your browser.
