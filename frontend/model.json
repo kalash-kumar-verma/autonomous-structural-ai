@@ -1,0 +1,516 @@
+{
+  "walls": [
+    {
+      "type": "load_bearing",
+      "center": [
+        24.6,
+        14.88
+      ],
+      "length": 27.12,
+      "angle": 1.5708,
+      "hasDoor": false,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        13.26,
+        1.56
+      ],
+      "length": 23.88,
+      "angle": 0.0,
+      "hasDoor": true,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        11.58,
+        27.96
+      ],
+      "length": 20.28,
+      "angle": 0.0,
+      "hasDoor": true,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        1.68,
+        19.62
+      ],
+      "length": 17.64,
+      "angle": 1.5708,
+      "hasDoor": true,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        6.54,
+        18.0
+      ],
+      "length": 10.2,
+      "angle": 0.0,
+      "hasDoor": true,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        6.42,
+        11.16
+      ],
+      "length": 10.2,
+      "angle": 0.0,
+      "hasDoor": true,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        1.68,
+        4.74
+      ],
+      "length": 8.04,
+      "angle": 1.5708,
+      "hasDoor": true,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        11.4,
+        24.48
+      ],
+      "length": 7.92,
+      "angle": 1.5708,
+      "hasDoor": false,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        10.32,
+        4.92
+      ],
+      "length": 6.96,
+      "angle": 1.5708,
+      "hasDoor": false,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        4.56,
+        8.28
+      ],
+      "length": 6.24,
+      "angle": 0.0,
+      "hasDoor": true,
+      "thickness": 0.42
+    },
+    {
+      "type": "partition",
+      "center": [
+        11.4,
+        13.38
+      ],
+      "length": 4.44,
+      "angle": 1.5708,
+      "hasDoor": false,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        11.7,
+        28.32
+      ],
+      "length": 4.2,
+      "angle": 0.0,
+      "hasDoor": false,
+      "thickness": 0.42
+    },
+    {
+      "type": "load_bearing",
+      "center": [
+        2.58,
+        28.32
+      ],
+      "length": 2.52,
+      "angle": 0.0,
+      "hasDoor": false,
+      "thickness": 0.42
+    },
+    {
+      "type": "partition",
+      "center": [
+        17.82,
+        7.56
+      ],
+      "length": 2.52,
+      "angle": 0.0,
+      "hasDoor": false,
+      "thickness": 0.42
+    }
+  ],
+  "floors": [
+    {
+      "id": "floor_0",
+      "center": [
+        13.3,
+        14.775
+      ],
+      "width": 26.6,
+      "depth": 29.55,
+      "label": "Bedroom 1",
+      "area_sqm": 196.51,
+      "aspect_ratio": 1.11
+    },
+    {
+      "id": "floor_1",
+      "center": [
+        6.025,
+        4.975
+      ],
+      "width": 7.45,
+      "depth": 5.55,
+      "label": "Bedroom 2",
+      "area_sqm": 10.34,
+      "aspect_ratio": 1.34
+    },
+    {
+      "id": "floor_2",
+      "center": [
+        13.75,
+        14.825
+      ],
+      "width": 20.8,
+      "depth": 25.15,
+      "label": "Bedroom 3",
+      "area_sqm": 130.78,
+      "aspect_ratio": 1.21
+    },
+    {
+      "id": "floor_3",
+      "center": [
+        6.65,
+        14.625
+      ],
+      "width": 8.6,
+      "depth": 5.75,
+      "label": "Bedroom 4",
+      "area_sqm": 12.36,
+      "aspect_ratio": 1.5
+    },
+    {
+      "id": "floor_4",
+      "center": [
+        6.625,
+        22.925
+      ],
+      "width": 8.65,
+      "depth": 8.95,
+      "label": "Bedroom 5",
+      "area_sqm": 19.35,
+      "aspect_ratio": 1.03
+    }
+  ],
+  "doors": [
+    {
+      "id": "door_0",
+      "position": [
+        1.3,
+        1,
+        0.7
+      ]
+    },
+    {
+      "id": "door_1",
+      "position": [
+        9.25,
+        1,
+        15.1
+      ]
+    },
+    {
+      "id": "door_2",
+      "position": [
+        1.95,
+        1,
+        3.5
+      ]
+    },
+    {
+      "id": "door_3",
+      "position": [
+        1.3,
+        1,
+        7.9
+      ]
+    },
+    {
+      "id": "door_4",
+      "position": [
+        1.6,
+        1,
+        11.35
+      ]
+    },
+    {
+      "id": "door_5",
+      "position": [
+        11.2,
+        1,
+        20.35
+      ]
+    },
+    {
+      "id": "door_6",
+      "position": [
+        21.65,
+        1,
+        25.7
+      ]
+    },
+    {
+      "id": "door_7",
+      "position": [
+        3.75,
+        1,
+        10.2
+      ]
+    },
+    {
+      "id": "door_8",
+      "position": [
+        7.35,
+        1,
+        6.1
+      ]
+    },
+    {
+      "id": "door_9",
+      "position": [
+        1.9,
+        1,
+        22.65
+      ]
+    },
+    {
+      "id": "door_10",
+      "position": [
+        -0.15,
+        1,
+        6.7
+      ]
+    },
+    {
+      "id": "door_11",
+      "position": [
+        0.0,
+        1,
+        3.8
+      ]
+    },
+    {
+      "id": "door_12",
+      "position": [
+        5.95,
+        1,
+        22.35
+      ]
+    },
+    {
+      "id": "door_13",
+      "position": [
+        14.7,
+        1,
+        20.25
+      ]
+    },
+    {
+      "id": "door_14",
+      "position": [
+        3.85,
+        1,
+        1.85
+      ]
+    },
+    {
+      "id": "door_15",
+      "position": [
+        6.05,
+        1,
+        11.05
+      ]
+    },
+    {
+      "id": "door_16",
+      "position": [
+        1.3,
+        1,
+        18.1
+      ]
+    },
+    {
+      "id": "door_17",
+      "position": [
+        -0.65,
+        1,
+        1.8
+      ]
+    },
+    {
+      "id": "door_18",
+      "position": [
+        4.15,
+        1,
+        17.8
+      ]
+    },
+    {
+      "id": "door_19",
+      "position": [
+        1.65,
+        1,
+        13.85
+      ]
+    },
+    {
+      "id": "door_20",
+      "position": [
+        4.6,
+        1,
+        13.9
+      ]
+    },
+    {
+      "id": "door_21",
+      "position": [
+        4.2,
+        1,
+        8.0
+      ]
+    },
+    {
+      "id": "door_22",
+      "position": [
+        5.95,
+        1,
+        17.6
+      ]
+    },
+    {
+      "id": "door_23",
+      "position": [
+        6.55,
+        1,
+        1.85
+      ]
+    },
+    {
+      "id": "door_24",
+      "position": [
+        16.55,
+        1,
+        18.35
+      ]
+    },
+    {
+      "id": "door_25",
+      "position": [
+        17.7,
+        1,
+        17.05
+      ]
+    },
+    {
+      "id": "door_26",
+      "position": [
+        1.3,
+        1,
+        9.7
+      ]
+    },
+    {
+      "id": "door_27",
+      "position": [
+        -1.85,
+        1,
+        11.6
+      ]
+    },
+    {
+      "id": "door_28",
+      "position": [
+        17.1,
+        1,
+        6.75
+      ]
+    },
+    {
+      "id": "door_29",
+      "position": [
+        3.9,
+        1,
+        27.75
+      ]
+    },
+    {
+      "id": "door_30",
+      "position": [
+        7.15,
+        1,
+        1.15
+      ]
+    },
+    {
+      "id": "door_31",
+      "position": [
+        1.7,
+        1,
+        12.3
+      ]
+    }
+  ],
+  "windows": [
+    {
+      "id": "window_0",
+      "position": [
+        16.55,
+        1.5,
+        7.2
+      ]
+    }
+  ],
+  "warning_overlays": [
+    {
+      "id": "warning_0",
+      "type": "warning_overlay",
+      "severity": "critical",
+      "color": "#ef4444",
+      "position": [
+        13.3,
+        0.05,
+        14.775
+      ],
+      "radius": 6.501,
+      "message": "CRITICAL: Room 1 span ~14.8m exceeds safe limit. Steel frame or transfer beam required."
+    },
+    {
+      "id": "warning_1",
+      "type": "warning_overlay",
+      "severity": "critical",
+      "color": "#ef4444",
+      "position": [
+        13.75,
+        0.05,
+        14.825
+      ],
+      "radius": 5.533,
+      "message": "CRITICAL: Room 3 span ~12.6m exceeds safe limit. Steel frame or transfer beam required."
+    }
+  ]
+}
