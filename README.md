@@ -79,8 +79,8 @@ cd autonomous-structural-ai
 ### 2. Virtual Environment (Not mandatory but recommended)
 ```bash
 python -m venv venv
-On Linux or Mac: source venv/bin/activate
-On Windows: venv\Scripts\activate
+source venv/bin/activate #On Linux or Mac
+venv\Scripts\activate #On Windows
 pip install -r requirements.txt
 ```
 
@@ -159,8 +159,3 @@ For best results use:
 | Works on real floor plan images | ✅ |
 
 ---
-
-## ⚠️ Disclaimer
-
-This system is an AI prototype for preliminary structural assessment only.
-All structural design decisions must be validated by a licensed structural engineer.
