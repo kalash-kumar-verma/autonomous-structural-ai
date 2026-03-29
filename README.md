@@ -87,13 +87,13 @@ pip install -r requirements.txt
 ### 3. Backend
 ```bash
 cd backend
-pip install -r ../requirements.txt
 python -m uvicorn app:app --reload
 ```
 
 ### 4. Frontend
 ```bash
-cd ../frontend
+#Create New Terminal
+cd frontend
 python -m http.server 5500
 ```
 
