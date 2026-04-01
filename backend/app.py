@@ -21,6 +21,7 @@ from generator.export_threejs import export_threejs
 from report.report_generator import generate_report
 from geometry.wall_graph import build_wall_graph
 from structural.boundary import detect_outer_walls
+from diagnostics.intermediate_artifacts import save_intermediate_artifacts
 
 app = FastAPI(
     title="Autonomous Structural Intelligence System",
@@ -159,6 +160,26 @@ async def upload(file: UploadFile = File(...), skip_text_filter: bool = Query(Fa
         model = generate_3d(walls, rooms, doors, windows, warnings, text_regions=text_regions)
         export_threejs(model)
 
+        # ── Stage 10: Intermediate artifact export ──────────────
+        artifact_dir = save_intermediate_artifacts(
+            base_dir=BASE_DIR,
+            original_image=img,
+            gray=gray,
+            lines_raw=lines,
+            walls=walls,
+            rooms=rooms,
+            doors=doors,
+            windows=windows,
+            wall_graph=wall_graph,
+            load_bearing=load_bearing,
+            partitions=partitions,
+            recommendations=recommendations,
+            cost_estimation=cost_estimation,
+            span_analysis=span_analysis,
+            warnings=warnings,
+            model=model,
+        )
+
         return {
             "status": "success",
 
@@ -180,7 +201,8 @@ async def upload(file: UploadFile = File(...), skip_text_filter: bool = Query(Fa
             "rooms": rooms,
             "graph_nodes": len(wall_graph["nodes"]),
             "graph_connections": len(wall_graph["graph"]),
-            "report": report
+            "report": report,
+            "intermediate_output_dir": artifact_dir
         }
     
 

@@ -44,7 +44,7 @@ def detect_wall_gaps(gray, walls):
     openings = []
     _, binary = cv2.threshold(gray, 180, 255, cv2.THRESH_BINARY_INV)
 
-    for wall in walls:
+    for wall_idx, wall in enumerate(walls):
         x1, y1 = wall["start"]
         x2, y2 = wall["end"]
         length = wall["length"]
@@ -80,7 +80,11 @@ def detect_wall_gaps(gray, walls):
                             "width": int(abs(cx - gap_start[0]) + 20),
                             "height": int(abs(cy - gap_start[1]) + 20),
                             "gap_length": float(gap_len),
-                            "type": "gap_opening"
+                            "type": "gap_opening",
+                            "source_wall_index": int(wall_idx),
+                            "source_wall_start": [int(x1), int(y1)],
+                            "source_wall_end": [int(x2), int(y2)],
+                            "source_wall_orientation": wall.get("orientation", "unknown")
                         })
                     gap_start = None
 

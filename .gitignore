@@ -2,3 +2,4 @@ __pycache__
 venv
 model.json
 input.png
+intermediate_output

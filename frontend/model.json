@@ -1,737 +1,411 @@
 {
   "walls": [
     {
-      "type": "load_bearing",
-      "center": [
-        14.7,
-        0.0
-      ],
-      "length": 29.4,
-      "angle": 0.0,
-      "hasDoor": true,
-      "thickness": 0.42
-    },
-    {
+      "id": "wall_0",
       "type": "load_bearing",
       "center": [
         0.0,
-        11.64
+        10.26
       ],
-      "length": 23.04,
-      "angle": 1.5708,
-      "hasDoor": true,
-      "thickness": 0.42
-    },
-    {
-      "type": "load_bearing",
-      "center": [
-        28.44,
-        9.6
-      ],
-      "length": 16.8,
+      "length": 20.52,
       "angle": 1.5708,
       "hasDoor": false,
-      "thickness": 0.42
+      "thickness": 0.42,
+      "source_indices": [
+        0
+      ]
     },
     {
+      "id": "wall_1",
       "type": "load_bearing",
       "center": [
-        1.2,
-        9.6
+        2.16,
+        10.32
       ],
-      "length": 16.8,
-      "angle": 1.5708,
-      "hasDoor": true,
-      "thickness": 0.42
-    },
-    {
-      "type": "load_bearing",
-      "center": [
-        8.22,
-        9.72
-      ],
-      "length": 14.28,
-      "angle": 0.0,
-      "hasDoor": true,
-      "thickness": 0.42
-    },
-    {
-      "type": "load_bearing",
-      "center": [
-        7.02,
-        17.76
-      ],
-      "length": 11.88,
-      "angle": 0.0,
-      "hasDoor": false,
-      "thickness": 0.42
-    },
-    {
-      "type": "load_bearing",
-      "center": [
-        22.92,
-        17.76
-      ],
-      "length": 11.04,
-      "angle": 0.0,
-      "hasDoor": false,
-      "thickness": 0.42
-    },
-    {
-      "type": "load_bearing",
-      "center": [
-        23.28,
-        9.72
-      ],
-      "length": 10.32,
-      "angle": 0.0,
-      "hasDoor": true,
-      "thickness": 0.42
-    },
-    {
-      "type": "load_bearing",
-      "center": [
-        14.76,
-        13.56
-      ],
-      "length": 8.88,
-      "angle": 1.5708,
-      "hasDoor": true,
-      "thickness": 0.42
-    },
-    {
-      "type": "load_bearing",
-      "center": [
-        14.58,
-        22.68
-      ],
-      "length": 7.08,
-      "angle": 0.0,
-      "hasDoor": false,
-      "thickness": 0.42
-    },
-    {
-      "type": "partition",
-      "center": [
-        15.18,
-        20.64
-      ],
-      "length": 5.4,
-      "angle": 0.0,
-      "hasDoor": false,
-      "thickness": 0.42
-    },
-    {
-      "type": "partition",
-      "center": [
-        7.98,
-        5.28
-      ],
-      "length": 5.16,
-      "angle": 0.0,
-      "hasDoor": true,
-      "thickness": 0.42
-    },
-    {
-      "type": "partition",
-      "center": [
-        3.78,
-        21.84
-      ],
-      "length": 5.16,
-      "angle": 0.0,
-      "hasDoor": false,
-      "thickness": 0.42
-    },
-    {
-      "type": "partition",
-      "center": [
-        14.76,
-        3.78
-      ],
-      "length": 5.16,
+      "length": 17.04,
       "angle": 1.5708,
       "hasDoor": false,
-      "thickness": 0.42
+      "thickness": 0.42,
+      "source_indices": [
+        1
+      ]
     },
     {
-      "type": "partition",
+      "id": "wall_2",
+      "type": "load_bearing",
       "center": [
-        21.84,
-        15.54
+        7.86,
+        0.0
       ],
-      "length": 4.92,
+      "length": 15.48,
+      "angle": 0.0,
+      "hasDoor": false,
+      "thickness": 0.42,
+      "source_indices": [
+        2
+      ]
+    },
+    {
+      "id": "wall_3",
+      "type": "load_bearing",
+      "center": [
+        13.2,
+        10.26
+      ],
+      "length": 12.6,
       "angle": 1.5708,
       "hasDoor": false,
-      "thickness": 0.42
+      "thickness": 0.42,
+      "source_indices": [
+        3
+      ]
     },
     {
-      "type": "partition",
+      "id": "wall_4",
+      "type": "load_bearing",
       "center": [
-        7.98,
-        13.56
+        6.36,
+        18.72
       ],
-      "length": 4.68,
+      "length": 8.16,
       "angle": 0.0,
       "hasDoor": false,
-      "thickness": 0.42
+      "thickness": 0.42,
+      "source_indices": [
+        4
+      ]
     },
     {
+      "id": "wall_5",
       "type": "partition",
       "center": [
-        19.98,
-        1.44
+        7.2,
+        16.92
       ],
-      "length": 4.68,
+      "length": 6.48,
+      "angle": 0.0,
+      "hasDoor": true,
+      "thickness": 0.42,
+      "source_indices": [
+        5
+      ]
+    },
+    {
+      "id": "wall_6",
+      "type": "partition",
+      "center": [
+        10.5,
+        16.44
+      ],
+      "length": 5.88,
       "angle": 0.0,
       "hasDoor": false,
-      "thickness": 0.42
+      "thickness": 0.42,
+      "source_indices": [
+        6
+      ]
     },
     {
+      "id": "wall_7",
       "type": "partition",
       "center": [
-        5.64,
-        1.44
+        4.44,
+        15.0
       ],
       "length": 4.56,
       "angle": 0.0,
       "hasDoor": false,
-      "thickness": 0.42
+      "thickness": 0.42,
+      "source_indices": [
+        7
+      ]
     },
     {
+      "id": "wall_8",
       "type": "partition",
       "center": [
-        21.48,
-        5.28
+        4.5,
+        12.24
       ],
-      "length": 4.56,
+      "length": 4.44,
       "angle": 0.0,
       "hasDoor": false,
-      "thickness": 0.42
+      "thickness": 0.42,
+      "source_indices": [
+        8
+      ]
     },
     {
+      "id": "wall_9",
       "type": "partition",
       "center": [
-        27.36,
-        4.56
+        4.44,
+        1.8
       ],
       "length": 4.32,
-      "angle": 1.5708,
-      "hasDoor": false,
-      "thickness": 0.42
-    },
-    {
-      "type": "partition",
-      "center": [
-        27.36,
-        12.9
-      ],
-      "length": 4.2,
-      "angle": 1.5708,
-      "hasDoor": false,
-      "thickness": 0.42
-    },
-    {
-      "type": "partition",
-      "center": [
-        18.3,
-        13.56
-      ],
-      "length": 3.48,
       "angle": 0.0,
       "hasDoor": false,
-      "thickness": 0.42
+      "thickness": 0.42,
+      "source_indices": [
+        9
+      ]
     },
     {
+      "id": "wall_10",
       "type": "partition",
       "center": [
-        17.76,
-        19.26
+        8.46,
+        3.96
       ],
-      "length": 3.24,
+      "length": 4.2,
+      "angle": 0.0,
+      "hasDoor": false,
+      "thickness": 0.42,
+      "source_indices": [
+        10
+      ]
+    },
+    {
+      "id": "wall_11",
+      "type": "partition",
+      "center": [
+        9.96,
+        6.6
+      ],
+      "length": 3.36,
+      "angle": 0.0,
+      "hasDoor": false,
+      "thickness": 0.42,
+      "source_indices": [
+        11
+      ]
+    },
+    {
+      "id": "wall_12",
+      "type": "partition",
+      "center": [
+        10.2,
+        17.28
+      ],
+      "length": 3.12,
       "angle": 1.5708,
       "hasDoor": false,
-      "thickness": 0.42
+      "thickness": 0.42,
+      "source_indices": [
+        12
+      ]
+    },
+    {
+      "id": "wall_13",
+      "type": "partition",
+      "center": [
+        11.28,
+        14.76
+      ],
+      "length": 2.64,
+      "angle": 0.0,
+      "hasDoor": false,
+      "thickness": 0.42,
+      "source_indices": [
+        13
+      ]
+    },
+    {
+      "id": "wall_14",
+      "type": "partition",
+      "center": [
+        6.6,
+        11.1
+      ],
+      "length": 2.52,
+      "angle": 1.5708,
+      "hasDoor": false,
+      "thickness": 0.42,
+      "source_indices": [
+        15
+      ]
+    },
+    {
+      "id": "wall_15",
+      "type": "partition",
+      "center": [
+        6.6,
+        3.0
+      ],
+      "length": 2.4,
+      "angle": 1.5708,
+      "hasDoor": false,
+      "thickness": 0.42,
+      "source_indices": [
+        14
+      ]
     }
   ],
   "floors": [
     {
       "id": "floor_0",
       "center": [
-        14.7,
-        11.575
+        7.8,
+        10.275
       ],
-      "width": 28.7,
-      "depth": 22.45,
+      "width": 15.6,
+      "depth": 20.55,
       "label": "Bedroom 1",
-      "area_sqm": 161.08,
-      "aspect_ratio": 1.28
-    },
-    {
-      "id": "floor_1",
-      "center": [
-        9.575,
-        5.35
-      ],
-      "width": 15.65,
-      "depth": 7.6,
-      "label": "Bedroom 2",
-      "area_sqm": 29.74,
-      "aspect_ratio": 2.06
-    },
-    {
-      "id": "floor_2",
-      "center": [
-        21.425,
-        6.925
-      ],
-      "width": 12.45,
-      "depth": 10.75,
-      "label": "Bedroom 3",
-      "area_sqm": 33.46,
-      "aspect_ratio": 1.16
-    },
-    {
-      "id": "floor_3",
-      "center": [
-        11.525,
-        15.1
-      ],
-      "width": 19.55,
-      "depth": 10.0,
-      "label": "Bedroom 4",
-      "area_sqm": 48.88,
-      "aspect_ratio": 1.96
-    },
-    {
-      "id": "floor_4",
-      "center": [
-        23.375,
-        13.675
-      ],
-      "width": 8.55,
-      "depth": 7.15,
-      "label": "Bedroom 5",
-      "area_sqm": 15.28,
-      "aspect_ratio": 1.2
+      "area_sqm": 80.15,
+      "aspect_ratio": 1.32
     }
   ],
   "doors": [
     {
-      "id": "door_0",
-      "position": [
-        11.65,
-        1,
-        3.0
-      ]
-    },
-    {
-      "id": "door_1",
-      "position": [
-        14.1,
-        1,
-        12.0
-      ]
-    },
-    {
       "id": "door_2",
+      "type": "door",
       "position": [
-        12.15,
-        1,
-        6.65
-      ]
-    },
-    {
-      "id": "door_3",
-      "position": [
-        15.05,
-        1,
-        8.15
-      ]
-    },
-    {
-      "id": "door_4",
-      "position": [
-        18.7,
-        1,
-        7.1
-      ]
-    },
-    {
-      "id": "door_5",
-      "position": [
-        19.5,
-        1,
-        9.65
-      ]
-    },
-    {
-      "id": "door_6",
-      "position": [
-        21.5,
-        1,
-        9.75
-      ]
-    },
-    {
-      "id": "door_7",
-      "position": [
-        12.35,
-        1,
-        18.85
-      ]
-    },
-    {
-      "id": "door_8",
-      "position": [
-        20.1,
-        1,
-        0.1
-      ]
-    },
-    {
-      "id": "door_9",
-      "position": [
-        14.2,
-        1,
-        9.85
-      ]
-    },
-    {
-      "id": "door_10",
-      "position": [
-        1.25,
-        1,
-        0.8
-      ]
-    },
-    {
-      "id": "door_11",
-      "position": [
-        17.6,
-        1,
-        9.8
-      ]
-    },
-    {
-      "id": "door_12",
-      "position": [
-        0.9,
-        1,
-        9.65
-      ]
-    },
-    {
-      "id": "door_13",
-      "position": [
-        14.85,
-        1,
-        1.05
-      ]
-    },
-    {
-      "id": "door_14",
-      "position": [
-        9.7,
-        1,
-        15.15
-      ]
-    },
-    {
-      "id": "door_15",
-      "position": [
-        21.6,
-        1,
-        2.05
-      ]
-    },
-    {
-      "id": "door_16",
-      "position": [
-        18.8,
-        1,
-        0.05
-      ]
-    },
-    {
-      "id": "door_17",
-      "position": [
-        0.05,
-        1,
-        3.2
-      ]
-    },
-    {
-      "id": "door_18",
-      "position": [
-        9.5,
-        1,
-        9.75
-      ]
-    },
-    {
-      "id": "door_19",
-      "position": [
-        3.95,
-        1,
-        0.05
-      ]
-    },
-    {
-      "id": "door_20",
-      "position": [
-        17.2,
-        1,
-        3.9
-      ]
-    },
-    {
-      "id": "door_21",
-      "position": [
-        7.15,
-        1,
-        -0.2
-      ]
-    },
-    {
-      "id": "door_22",
-      "position": [
-        13.7,
-        1,
-        0.8
-      ]
-    },
-    {
-      "id": "door_23",
-      "position": [
-        7.25,
-        1,
-        7.2
-      ]
-    },
-    {
-      "id": "door_24",
-      "position": [
-        12.55,
-        1,
-        12.55
-      ]
-    },
-    {
-      "id": "door_25",
-      "position": [
-        24.3,
-        1,
-        9.7
-      ]
-    },
-    {
-      "id": "door_26",
-      "position": [
-        14.15,
-        1,
-        17.1
-      ]
-    },
-    {
-      "id": "door_27",
-      "position": [
-        27.2,
-        1,
-        1.7
-      ]
-    },
-    {
-      "id": "door_28",
-      "position": [
-        0.0,
-        1,
-        9.45
-      ]
-    },
-    {
-      "id": "door_29",
-      "position": [
-        27.25,
-        1,
-        9.85
-      ]
-    },
-    {
-      "id": "door_30",
-      "position": [
-        15.3,
-        1,
-        19.65
-      ]
-    },
-    {
-      "id": "door_31",
-      "position": [
-        14.45,
-        1,
-        12.05
-      ]
-    },
-    {
-      "id": "door_32",
-      "position": [
-        1.55,
-        1,
-        7.55
-      ]
-    },
-    {
-      "id": "door_33",
-      "position": [
-        0.9,
-        1,
-        17.55
-      ]
-    },
-    {
-      "id": "door_34",
-      "position": [
-        5.65,
-        1,
-        10.3
-      ]
-    },
-    {
-      "id": "door_35",
-      "position": [
-        25.1,
-        1,
-        1.2
-      ]
-    },
-    {
-      "id": "door_36",
-      "position": [
-        1.0,
-        1,
-        0.7
-      ]
-    },
-    {
-      "id": "door_37",
-      "position": [
-        5.25,
-        1,
-        13.25
-      ]
-    },
-    {
-      "id": "door_38",
-      "position": [
-        6.7,
-        1,
-        4.95
-      ]
-    },
-    {
-      "id": "door_39",
-      "position": [
-        10.0,
-        1,
-        19.75
-      ]
-    },
-    {
-      "id": "door_40",
-      "position": [
-        16.3,
-        1,
-        17.5
-      ]
+        4.55,
+        1.05,
+        16.92
+      ],
+      "width": 1.4,
+      "height": 2.1,
+      "depth": 0.34,
+      "rotation_y": -0.0,
+      "wall_id": "wall_5",
+      "attached_to_wall": true,
+      "wall_t": 0.091,
+      "opening_kind": "arc_door",
+      "color": "#8B4513"
     }
   ],
   "windows": [
     {
       "id": "window_0",
+      "type": "window",
       "position": [
-        7.45,
+        2.16,
         1.5,
-        5.25
-      ]
+        16.55
+      ],
+      "width": 2.0,
+      "height": 1.2,
+      "depth": 0.34,
+      "rotation_y": -1.5708,
+      "wall_id": "wall_1",
+      "attached_to_wall": true,
+      "wall_t": 0.8656,
+      "opening_kind": "gap_opening",
+      "color": "#87CEEB"
     },
     {
       "id": "window_1",
+      "type": "window",
       "position": [
-        6.15,
+        9.65,
         1.5,
-        13.6
-      ]
+        16.44
+      ],
+      "width": 2.0,
+      "height": 1.2,
+      "depth": 0.34,
+      "rotation_y": -0.0,
+      "wall_id": "wall_6",
+      "attached_to_wall": true,
+      "wall_t": 0.3554,
+      "opening_kind": "gap_opening",
+      "color": "#87CEEB"
     },
     {
       "id": "window_2",
+      "type": "window",
       "position": [
-        20.15,
+        9.9,
         1.5,
-        5.25
-      ]
-    },
-    {
-      "id": "window_3",
-      "position": [
-        11.45,
-        1.5,
-        22.4
-      ]
+        6.6
+      ],
+      "width": 2.0,
+      "height": 1.2,
+      "depth": 0.34,
+      "rotation_y": -0.0,
+      "wall_id": "wall_11",
+      "attached_to_wall": true,
+      "wall_t": 0.4821,
+      "opening_kind": "gap_opening",
+      "color": "#87CEEB"
     }
   ],
   "warning_overlays": [
     {
       "id": "warning_0",
       "type": "warning_overlay",
+      "warning_index": 0,
       "severity": "critical",
       "color": "#ef4444",
       "position": [
-        14.7,
+        7.8,
         0.05,
-        11.575
+        10.275
       ],
-      "radius": 6.314,
-      "message": "CRITICAL: Room 1 span ~14.4m exceeds safe limit. Steel frame or transfer beam required."
+      "radius": 4.521,
+      "message": "CRITICAL: Space span ~10.3m exceeds safe limit. Steel frame or transfer beam required.",
+      "target_wall_id": "wall_3"
     },
     {
       "id": "warning_1",
       "type": "warning_overlay",
+      "warning_index": 1,
       "severity": "critical",
       "color": "#ef4444",
       "position": [
-        11.525,
+        0.0,
         0.05,
-        15.1
+        10.26
       ],
-      "radius": 4.301,
-      "message": "CRITICAL: Room 4 span ~9.8m exceeds safe limit. Steel frame or transfer beam required."
+      "radius": 2.462,
+      "message": "Long unsupported wall ~10.2m detected. Intermediate column or pilaster needed.",
+      "target_wall_id": "wall_0"
+    },
+    {
+      "id": "warning_2",
+      "type": "warning_overlay",
+      "warning_index": 2,
+      "severity": "high",
+      "color": "#fb923c",
+      "position": [
+        2.16,
+        0.05,
+        10.32
+      ],
+      "radius": 2.045,
+      "message": "Long unsupported wall ~8.6m detected. Intermediate column or pilaster needed.",
+      "target_wall_id": "wall_1"
+    },
+    {
+      "id": "warning_3",
+      "type": "warning_overlay",
+      "warning_index": 3,
+      "severity": "high",
+      "color": "#fb923c",
+      "position": [
+        7.86,
+        0.05,
+        0.0
+      ],
+      "radius": 1.858,
+      "message": "Long unsupported wall ~7.7m detected. Intermediate column or pilaster needed.",
+      "target_wall_id": "wall_2"
     },
     {
       "id": "warning_4",
       "type": "warning_overlay",
+      "warning_index": 4,
       "severity": "high",
       "color": "#fb923c",
       "position": [
-        9.575,
+        13.2,
         0.05,
-        5.35
+        10.26
       ],
-      "radius": 3.443,
-      "message": "Large span ~7.8m in Room 2. Intermediate beam support recommended."
-    },
-    {
-      "id": "warning_5",
-      "type": "warning_overlay",
-      "severity": "high",
-      "color": "#fb923c",
-      "position": [
-        21.425,
-        0.05,
-        6.925
-      ],
-      "radius": 2.739,
-      "message": "Large span ~6.2m in Room 3. Intermediate beam support recommended."
+      "radius": 1.512,
+      "message": "Long unsupported wall ~6.2m detected. Intermediate column or pilaster needed.",
+      "target_wall_id": "wall_3"
     }
   ]
 }

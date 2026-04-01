@@ -8,6 +8,9 @@ FLOOR_THICKNESS = 0.15
 SCALE = 0.05           # render scale: pixels → Three.js units
 MIN_RENDER_WALL_LEN = 0.7
 SNAP_GRID = 0.12
+DOOR_HEIGHT = 2.1
+WINDOW_HEIGHT = 1.2
+WINDOW_SILL = 0.9
 
 
 def wall_to_3d(wall, index):
@@ -183,6 +186,243 @@ def _distance_point_to_segment(px, py, ax, ay, bx, by):
     return dist, t
 
 
+def _opening_center(opening):
+    ox = opening.get("x", 0)
+    oy = opening.get("y", 0)
+    ow = opening.get("width", 0)
+    oh = opening.get("height", 0)
+    return (ox + (ow / 2.0)) * SCALE, (oy + (oh / 2.0)) * SCALE
+
+
+def _opening_axis(opening):
+    ow = float(opening.get("width", 0))
+    oh = float(opening.get("height", 0))
+    return "horizontal" if ow >= oh else "vertical"
+
+
+def _wall_axis(wall):
+    ang = float(wall.get("angle", 0.0))
+    return "horizontal" if abs(math.cos(ang)) >= abs(math.sin(ang)) else "vertical"
+
+
+def _find_wall_by_source_segment(opening, cleaned_walls):
+    src_start = opening.get("source_wall_start")
+    src_end = opening.get("source_wall_end")
+    if not src_start or not src_end:
+        return None
+
+    sx1 = float(src_start[0]) * SCALE
+    sy1 = float(src_start[1]) * SCALE
+    sx2 = float(src_end[0]) * SCALE
+    sy2 = float(src_end[1]) * SCALE
+    src_axis = "horizontal" if abs(sx2 - sx1) >= abs(sy2 - sy1) else "vertical"
+    best_idx = None
+    best_score = float("inf")
+
+    for idx, wall in enumerate(cleaned_walls):
+        if _wall_axis(wall) != src_axis:
+            continue
+
+        wx1, wy1, wx2, wy2 = wall["_segment"]
+        direct = math.sqrt((wx1 - sx1) ** 2 + (wy1 - sy1) ** 2) + math.sqrt((wx2 - sx2) ** 2 + (wy2 - sy2) ** 2)
+        reverse = math.sqrt((wx1 - sx2) ** 2 + (wy1 - sy2) ** 2) + math.sqrt((wx2 - sx1) ** 2 + (wy2 - sy1) ** 2)
+        endpoint_score = min(direct, reverse)
+        len_penalty = abs(float(wall["length"]) - math.sqrt((sx2 - sx1) ** 2 + (sy2 - sy1) ** 2)) * 0.12
+        score = endpoint_score + len_penalty
+
+        if score < best_score:
+            best_score = score
+            best_idx = idx
+
+    if best_idx is None:
+        return None
+    return best_idx
+
+
+def _find_nearest_wall_for_opening(opening, cleaned_walls):
+    px, py = _opening_center(opening)
+
+    preferred_axis = _opening_axis(opening)
+    candidates = [
+        (idx, wall) for idx, wall in enumerate(cleaned_walls)
+        if _wall_axis(wall) == preferred_axis
+    ]
+    if not candidates:
+        candidates = list(enumerate(cleaned_walls))
+
+    best_idx = None
+    best_dist = float("inf")
+    best_t = 0.0
+    best_pt = (px, py)
+
+    for idx, wall in candidates:
+        ax, ay, bx, by = wall["_segment"]
+        dist, t = _distance_point_to_segment(px, py, ax, ay, bx, by)
+        if t < 0.02 or t > 0.98:
+            dist += 0.15
+        if dist < best_dist:
+            best_dist = dist
+            best_idx = idx
+            best_t = t
+            best_pt = (ax + (bx - ax) * t, ay + (by - ay) * t)
+
+    if best_idx is None:
+        return None
+
+    return {
+        "wall_idx": best_idx,
+        "distance": best_dist,
+        "t": best_t,
+        "point": best_pt,
+    }
+
+
+def _build_opening_models(openings, cleaned_walls, kind):
+    models = []
+    if not openings:
+        return models
+
+    if kind == "door":
+        max_attach_distance = 0.38
+        min_t = 0.08
+        max_t = 0.92
+    else:
+        # Windows are visually subtler in 2D plans; allow wider snap tolerance.
+        max_attach_distance = 0.9
+        min_t = 0.04
+        max_t = 0.96
+
+    for i, opening in enumerate(openings):
+        nearest = None
+
+        source_wall_idx = _find_wall_by_source_segment(opening, cleaned_walls)
+        if source_wall_idx is not None:
+            px, py = _opening_center(opening)
+            wall = cleaned_walls[source_wall_idx]
+            ax, ay, bx, by = wall["_segment"]
+            dist, t = _distance_point_to_segment(px, py, ax, ay, bx, by)
+            nearest = {
+                "wall_idx": source_wall_idx,
+                "distance": dist,
+                "t": t,
+                "point": (ax + (bx - ax) * t, ay + (by - ay) * t),
+            }
+
+        if nearest is None:
+            nearest = _find_nearest_wall_for_opening(opening, cleaned_walls)
+
+        if nearest and nearest["distance"] <= max_attach_distance and min_t <= nearest["t"] <= max_t:
+            wall = cleaned_walls[nearest["wall_idx"]]
+            cx, cz = nearest["point"]
+            angle = wall["angle"]
+            wall_id = f"wall_{nearest['wall_idx']}"
+            attached = True
+            depth = 0.34
+            wall_len = float(wall.get("length", 0.0))
+            wall_t = float(nearest["t"])
+        else:
+            cx, cz = _opening_center(opening)
+            angle = 0.0
+            wall_id = None
+            attached = False
+            depth = 0.12
+            wall_len = 0.0
+            wall_t = 0.5
+
+        rough_span = max(opening.get("width", 0), opening.get("height", 0)) * SCALE
+
+        if kind == "door":
+            width = max(0.75, min(max(rough_span, 0.9), 1.4))
+            height = DOOR_HEIGHT
+            center_y = round(height / 2.0, 3)
+            color = "#8B4513"
+        else:
+            width = max(0.6, min(max(rough_span, 0.8), 2.0))
+            height = WINDOW_HEIGHT
+            center_y = round(WINDOW_SILL + (height / 2.0), 3)
+            color = "#87CEEB"
+
+        models.append({
+            "id": f"{kind}_{i}",
+            "type": kind,
+            "position": [round(cx, 3), center_y, round(cz, 3)],
+            "width": round(width, 3),
+            "height": round(height, 3),
+            "depth": round(depth, 3),
+            "rotation_y": round(-angle, 4),
+            "wall_id": wall_id,
+            "attached_to_wall": attached,
+            "wall_length": round(wall_len, 3),
+            "wall_t": round(wall_t, 4),
+            "opening_kind": opening.get("type") or opening.get("opening_type") or kind,
+            "color": color
+        })
+
+    return models
+
+
+def _prune_openings(models, kind):
+    if not models:
+        return []
+
+    # Keep only openings confidently attached to a wall.
+    attached = [m for m in models if m.get("attached_to_wall") and m.get("wall_id")]
+    by_wall = {}
+    for m in attached:
+        by_wall.setdefault(m["wall_id"], []).append(m)
+
+    pruned = []
+    min_clearance = 0.95 if kind == "door" else 0.45
+
+    for wall_id, items in by_wall.items():
+        items = sorted(items, key=lambda x: x.get("wall_t", 0.5))
+        kept = []
+        for item in items:
+            t = float(item.get("wall_t", 0.5))
+            wall_len = float(item.get("wall_length", 0.0))
+
+            # Reject openings too close to wall ends.
+            if wall_len > 0 and (t * wall_len < 0.45 or (1.0 - t) * wall_len < 0.45):
+                continue
+
+            overlap = False
+            for k in kept:
+                dt = abs(float(k.get("wall_t", 0.5)) - t)
+                ref_len = max(wall_len, float(k.get("wall_length", 0.0)), 1e-6)
+                along = dt * ref_len
+                need = max(min_clearance, 0.5 * (float(item.get("width", 0.8)) + float(k.get("width", 0.8))))
+                if along < need:
+                    overlap = True
+                    break
+            if not overlap:
+                kept.append(item)
+
+        pruned.extend(kept)
+
+    pruned.sort(key=lambda x: x["id"])
+    return pruned
+
+
+def _strip_opening_internal_fields(models):
+    out = []
+    for m in models:
+        out.append({
+            "id": m.get("id"),
+            "type": m.get("type"),
+            "position": m.get("position"),
+            "width": m.get("width"),
+            "height": m.get("height"),
+            "depth": m.get("depth"),
+            "rotation_y": m.get("rotation_y", 0.0),
+            "wall_id": m.get("wall_id"),
+            "attached_to_wall": m.get("attached_to_wall", False),
+            "wall_t": m.get("wall_t"),
+            "opening_kind": m.get("opening_kind"),
+            "color": m.get("color"),
+        })
+    return out
+
+
 def _snap_value(v, step=SNAP_GRID):
     if step <= 0:
         return v
@@ -192,7 +432,7 @@ def _snap_value(v, step=SNAP_GRID):
 def _clean_wall_geometry(walls):
     """Clean noisy segments for rendering without mutating analysis walls."""
     snapped = []
-    for wall in walls:
+    for wall_idx, wall in enumerate(walls):
         x1, y1 = wall["start"]
         x2, y2 = wall["end"]
         x1s = _snap_value(x1 * SCALE)
@@ -212,7 +452,8 @@ def _clean_wall_geometry(walls):
             "y2": y2s,
             "length": length,
             "angle": angle,
-            "type": wall.get("type", "partition")
+            "type": wall.get("type", "partition"),
+            "source_indices": [wall_idx]
         })
 
     # Merge near-collinear segments with similar angle and close endpoints.
@@ -254,6 +495,7 @@ def _clean_wall_geometry(walls):
             m["x2"], m["y2"] = pts[max_i]
             m["length"] = math.sqrt((m["x2"] - m["x1"]) ** 2 + (m["y2"] - m["y1"]) ** 2)
             m["angle"] = math.atan2(m["y2"] - m["y1"], m["x2"] - m["x1"])
+            m["source_indices"] = sorted(set(m.get("source_indices", []) + wall.get("source_indices", [])))
             absorbed = True
             break
 
@@ -272,18 +514,56 @@ def _clean_wall_geometry(walls):
             "center": [round(center_x, 3), round(center_y, 3)],
             "length": round(length, 3),
             "angle": round(wall["angle"], 4),
+            "source_indices": wall.get("source_indices", []),
             "_segment": (wall["x1"], wall["y1"], wall["x2"], wall["y2"])
         })
 
     return cleaned
 
 
-def _build_warning_overlays(warnings, rooms):
+def _resolve_warning_wall_id(warning, rooms, wall_models):
+    wall_index = warning.get("wall_index")
+    if wall_index is not None:
+        for wall in wall_models:
+            if wall_index in wall.get("source_indices", []):
+                return wall.get("id")
+
+    room_name = warning.get("room")
+    if not room_name or not rooms or not wall_models:
+        return None
+
+    room_lookup = {r.get("label", ""): r for r in rooms}
+    room = room_lookup.get(room_name)
+    if not room:
+        return None
+
+    cx = (room["x"] + (room["width"] / 2.0)) * SCALE
+    cz = (room["y"] + (room["height"] / 2.0)) * SCALE
+
+    candidates = [w for w in wall_models if w.get("type") == "load_bearing"]
+    if not candidates:
+        candidates = wall_models
+
+    best = None
+    best_dist = float("inf")
+    for wall in candidates:
+        wx = wall["center"][0]
+        wz = wall["center"][1]
+        dist = math.sqrt((wx - cx) ** 2 + (wz - cz) ** 2)
+        if dist < best_dist:
+            best_dist = dist
+            best = wall
+
+    return best.get("id") if best else None
+
+
+def _build_warning_overlays(warnings, rooms, wall_models):
     overlays = []
-    if not warnings or not rooms:
+    if not warnings:
         return overlays
 
     room_lookup = {r.get("label", ""): r for r in rooms}
+    wall_lookup = {w.get("id"): w for w in wall_models}
     severity_to_color = {
         "critical": "#ef4444",
         "high": "#fb923c",
@@ -292,24 +572,34 @@ def _build_warning_overlays(warnings, rooms):
     }
 
     for idx, warning in enumerate(warnings):
+        target_wall_id = _resolve_warning_wall_id(warning, rooms, wall_models)
+
         room_name = warning.get("room")
         room = room_lookup.get(room_name)
-        if not room:
-            continue
+        if room:
+            cx = (room["x"] + (room["width"] / 2.0)) * SCALE
+            cz = (room["y"] + (room["height"] / 2.0)) * SCALE
+            radius = max(room["width"], room["height"]) * SCALE * 0.22
+        else:
+            target_wall = wall_lookup.get(target_wall_id)
+            if not target_wall:
+                continue
+            cx = target_wall["center"][0]
+            cz = target_wall["center"][1]
+            radius = target_wall.get("length", 1.0) * 0.12
 
-        cx = (room["x"] + (room["width"] / 2.0)) * SCALE
-        cz = (room["y"] + (room["height"] / 2.0)) * SCALE
-        radius = max(room["width"], room["height"]) * SCALE * 0.22
         severity = warning.get("severity", "low")
 
         overlays.append({
             "id": f"warning_{idx}",
             "type": "warning_overlay",
+            "warning_index": idx,
             "severity": severity,
             "color": severity_to_color.get(severity, "#f59e0b"),
             "position": [round(cx, 3), 0.05, round(cz, 3)],
             "radius": round(max(radius, 0.35), 3),
-            "message": warning.get("message", "")
+            "message": warning.get("message", ""),
+            "target_wall_id": target_wall_id
         })
 
     return overlays
@@ -329,16 +619,17 @@ def generate_3d(walls, rooms=None, doors=None, windows=None, warnings=None, text
     door_positions = []
     if doors:
         for d in doors:
+            dx, dy = _opening_center(d)
             door_positions.append((
-                d.get("x", 0) * SCALE,
-                d.get("y", 0) * SCALE
+                dx,
+                dy
             ))
 
     # -------------------------
     # WALLS (with door cutouts)
     # -------------------------
     cleaned_walls = _clean_wall_geometry(walls)
-    for wall in cleaned_walls:
+    for i, wall in enumerate(cleaned_walls):
         has_door = False
         ax, ay, bx, by = wall["_segment"]
         for dx, dy in door_positions:
@@ -348,12 +639,14 @@ def generate_3d(walls, rooms=None, doors=None, windows=None, warnings=None, text
                 break
 
         wall_models.append({
+            "id": f"wall_{i}",
             "type": wall["type"],
             "center": wall["center"],
             "length": wall["length"],
             "angle": wall["angle"],
             "hasDoor": has_door,
-            "thickness": 0.42
+            "thickness": 0.42,
+            "source_indices": wall.get("source_indices", [])
         })
 
     # -------------------------
@@ -386,36 +679,33 @@ def generate_3d(walls, rooms=None, doors=None, windows=None, warnings=None, text
             })
 
     # -------------------------
-    # DOORS (visual markers)
+    # DOORS (wall-attached openings)
     # -------------------------
-    if doors:
-        for i, d in enumerate(doors):
+    door_models = _build_opening_models(doors or [], cleaned_walls, kind="door")
+    door_models = _prune_openings(door_models, kind="door")
+    door_models = _strip_opening_internal_fields(door_models)
 
-            door_models.append({
-                "id": f"door_{i}",
-                "position": [
-                    round(d.get("x", 0) * SCALE, 3),
-                    1,
-                    round(d.get("y", 0) * SCALE, 3)
-                ]
-            })
+    # Recompute hasDoor from final refined door attachments so wall cutouts
+    # in the frontend match the actual exported door list.
+    for wall in wall_models:
+        wall["hasDoor"] = False
+    attached_wall_ids = {
+        d.get("wall_id") for d in door_models
+        if d.get("attached_to_wall") and d.get("wall_id")
+    }
+    if attached_wall_ids:
+        for wall in wall_models:
+            if wall.get("id") in attached_wall_ids:
+                wall["hasDoor"] = True
 
     # -------------------------
     # WINDOWS
     # -------------------------
-    if windows:
-        for i, w in enumerate(windows):
+    window_models = _build_opening_models(windows or [], cleaned_walls, kind="window")
+    window_models = _prune_openings(window_models, kind="window")
+    window_models = _strip_opening_internal_fields(window_models)
 
-            window_models.append({
-                "id": f"window_{i}",
-                "position": [
-                    round(w.get("x", 0) * SCALE, 3),
-                    1.5,
-                    round(w.get("y", 0) * SCALE, 3)
-                ]
-            })
-
-    warning_overlays = _build_warning_overlays(warnings, rooms or [])
+    warning_overlays = _build_warning_overlays(warnings, rooms or [], wall_models)
 
     # Note: text_regions parameter is used ONLY for improving wall detection accuracy
     # Text annotations are not rendered in 3D to keep the model clean and focused on

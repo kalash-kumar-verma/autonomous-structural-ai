@@ -78,7 +78,7 @@ def structural_warnings(walls, rooms):
     # === WALL WARNINGS ===
     max_length = max((w["length"] for w in walls), default=1)
 
-    for wall in walls:
+    for wall_idx, wall in enumerate(walls):
         x1, y1 = wall["start"]
         x2, y2 = wall["end"]
         length = wall["length"]
@@ -90,6 +90,7 @@ def structural_warnings(walls, rooms):
             warnings.append({
                 "type": "long_wall",
                 "severity": sev,
+                "wall_index": wall_idx,
                 "message": f"Long unsupported wall ~{length_m:.1f}m detected. Intermediate column or pilaster needed.",
                 "recommendation": "Add RCC column every 4–5m or use pilasters."
             })
@@ -99,6 +100,7 @@ def structural_warnings(walls, rooms):
             warnings.append({
                 "type": "thin_load_bearing",
                 "severity": "high",
+                "wall_index": wall_idx,
                 "message": "Load bearing wall appears thin. Verify minimum 230mm brick or 200mm RCC.",
                 "recommendation": "Check wall thickness meets structural requirements."
             })
