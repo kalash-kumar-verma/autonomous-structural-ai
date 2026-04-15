@@ -1,74 +1,73 @@
-# 🏗️ StructureAI — Autonomous Structural Intelligence System v2.0
+# Autonomous Structural AI
 
-> **Floor Plan Image → AI Analysis → 3D Building Model → Engineering Report**
+Autonomous Structural AI is an end-to-end floor-plan intelligence system that transforms a 2D architectural image into structural insights, a 3D building model, and an engineering-style report.
 
----
+It combines computer vision, structural heuristics, material recommendation logic, and interactive visualization in a single workflow.
 
-## 🚀 What's New in v2.0
+## What this project does
 
-### Backend Improvements
-| Module | Enhancement |
-|--------|------------|
-| **Wall Detection** | Angle-based clustering, collinear merging with gap bridging, axis-snap, deduplication |
-| **Floor Parser** | CLAHE contrast enhancement + adaptive + Otsu dual-mask, scale-adaptive Hough params |
-| **Room Detection** | Connected component analysis, flood-fill, IoU-based deduplication, auto room labeling |
-| **Door/Window Detector** | HoughCircles arc detection + wall-gap scanning + triple-line window detection |
-| **Load Bearing** | Boundary detection + wall connectivity graph + multi-factor structural scoring (0–100) |
-| **Structural Warnings** | 4-level severity (critical/high/medium/low), span-based physics checks, wall-ratio analysis |
-| **Material Recommender** | Score-aware recommendations, span-based logic, detailed specs (strength, fire rating) |
-| **Cost Estimator** | Area-based costing (length × height), labor + material split, GST, contingency, finishing |
-| **Report Generator** | Structural grade (A+–F), executive summary, key actions, professional disclaimer |
-| **3D Generator** | Roof slab, door markers, window markers, per-room floor slabs, building stats |
+Given a floor plan image (`PNG/JPG/BMP`), the system:
 
-### Frontend Improvements
-- 🎨 **Full dark-mode redesign** — professional engineering UI
-- 📊 **Structural grade badge** (A+–F) with score
-- 🏗️ **3D viewer** — custom orbit controls (no CDN dependency), roof/floor toggles, wireframe mode, top/iso presets
-- 📈 **Span analysis** with horizontal bar charts
-- 💰 **Detailed cost breakdown** — material, labor, GST, contingency, finishing
-- ⚠️ **Color-coded warnings** — severity levels with recommendations
-- 🚪 **Room table** — label, area, span, aspect ratio
-- 🧱 **Material cards** — alternatives, specs, structural scores
-- ⬇️ **JSON export** + print
+- Parses and enhances the drawing using CV preprocessing
+- Detects walls, rooms, doors, and windows
+- Classifies walls into load-bearing vs partition candidates
+- Generates structural warnings with severity levels
+- Detects large spans and potential structural risk zones
+- Recommends materials by wall type and score
+- Estimates construction cost (material + labor + GST + contingency)
+- Produces a structural grade report
+- Exports a 3D scene (`model.json`) for interactive frontend rendering
 
----
+## Tech stack
 
-## 📁 Project Structure
+### Backend
+- FastAPI
+- Uvicorn
+- OpenCV
+- NumPy
 
-```
+### Frontend
+- HTML/CSS/JavaScript
+- Three.js (`r128`) for 3D visualization
+
+## Repository structure
+
+```text
 autonomous-structural-ai/
 ├── backend/
-│   ├── app.py                    ← FastAPI main (enhanced pipeline)
+│   ├── app.py
 │   ├── parser/
-│   │   ├── floor_parser.py       ← CLAHE + adaptive threshold + Hough
-│   │   ├── wall_detector.py      ← Clustering + collinear merge + dedup
-│   │   ├── room_detector.py      ← Connected components + room labeling
-│   │   └── door_window_detector.py ← Arc + gap + triple-line detection
+│   │   ├── floor_parser.py
+│   │   ├── wall_detector.py
+│   │   ├── room_detector.py
+│   │   └── door_window_detector.py
 │   ├── structural/
-│   │   ├── load_bearing.py       ← Boundary graph + structural scoring
-│   │   ├── warnings.py           ← 4-level severity warning system
-│   │   └── span_detector.py      ← Span analysis per room
+│   │   ├── load_bearing.py
+│   │   ├── warnings.py
+│   │   └── span_detector.py
 │   ├── materials/
-│   │   ├── recommender.py        ← Score-aware material selection
-│   │   ├── cost_estimator.py     ← Area-based cost with GST + contingency
-│   │   └── material_db.py        ← Material specs database
+│   │   ├── recommender.py
+│   │   ├── cost_estimator.py
+│   │   └── material_db.py
 │   ├── generator/
-│   │   ├── model_3d.py           ← Full scene: walls, floors, doors, windows, roof
-│   │   └── export_threejs.py     ← JSON export
-│   └── report/
-│       └── report_generator.py   ← Structured report with grade
+│   │   ├── model_3d.py
+│   │   └── export_threejs.py
+│   ├── report/
+│   │   └── report_generator.py
+│   └── ...
 ├── frontend/
-│   ├── index.html                ← Full redesigned UI (single file)
-│   └── model.json                ← Generated 3D scene (auto-updated)
+│   ├── index.html
+│   ├── script.js
+│   ├── style.css
+│   └── model.json
 ├── sample_input/
 │   ├── sample1.jpg
 │   └── sample2.jpg
-└── requirements.txt
+├── requirements.txt
+└── serve_frontend.py
 ```
 
----
-
-## ⚡ Quick Start
+## Installation Guide
 
 ### 1. Git Clone
 ```bash
@@ -99,9 +98,8 @@ python -m http.server 5500
 
 Open `http://localhost:5500` in your browser.
 
----
 
-## 🎯 Pipeline Flow
+## Pipeline Flow
 
 ```
 Upload PNG/JPG
@@ -132,30 +130,89 @@ detect_load_bearing()       ← Boundary + graph + structural score
      export_threejs()        ← model.json → Three.js renderer
 ```
 
----
+## API overview
 
-## 🧪 Test with Sample Images
+### `GET /`
+Basic service info and available endpoints.
 
-Sample floor plans are in `sample_input/`. Upload `sample1.jpg` or `sample2.jpg` to test.
+### `GET /health`
+Health status and version check.
 
-For best results use:
-- High contrast black-and-white floor plans
-- PNG or high-quality JPG
-- At least 600×600 px resolution
-- Architectural drawings (not hand-sketched)
+### `POST /upload`
+Main analysis endpoint.
 
----
+**Input**
+- `multipart/form-data`
+- Field: `file` (image)
 
-## 🏆 Hackathon Highlights
+**Optional query params**
+- `skip_text_filter` (bool): bypass text-filter path for diagnostics
+- `debug` (bool): enable debug behavior in parsing stages
 
-| Feature | Status |
-|---------|--------|
-| Real CV pipeline (no mock data) | ✅ |
-| Structural engineering scoring | ✅ |
-| Interactive 3D viewer | ✅ |
-| Exportable JSON report | ✅ |
-| Professional UI | ✅ |
-| Modular FastAPI backend | ✅ |
-| Works on real floor plan images | ✅ |
+**Response includes**
+- `summary` (wall/room/door/window counts)
+- `structural_grade`
+- `building_stats`
+- `material_recommendations`
+- `cost_estimation`
+- `structural_warnings`
+- `span_analysis`
+- `rooms`
+- `report`
+- `intermediate_output_dir`
 
----
+## Analysis pipeline
+
+1. Floor plan parsing and line extraction
+2. Wall detection and cleanup
+3. Room detection
+4. Door/window detection
+5. Load-bearing inference
+6. Structural warnings + span checks
+7. Material recommendation
+8. Cost estimation
+9. Report generation
+10. 3D model generation and export
+
+## Frontend features
+
+- Drag-and-drop floor plan upload
+- Live analysis progress steps
+- Structural grade card and metrics
+- Interactive 3D viewer with:
+  - rotation, zoom, pan
+  - top/iso/front presets
+  - wireframe mode
+  - layer toggles (load-bearing, partition, rooms, doors, windows, warnings)
+- Warning-to-wall highlighting in 3D
+- Room analysis, span analysis, cost and material panels
+- JSON export and print-friendly report workflow
+
+## Input recommendations
+
+For best analysis quality, use:
+
+- High-contrast architectural floor plans
+- PNG or high-quality JPG/BMP
+- At least `600 x 600` resolution
+- Clean drawings rather than hand sketches
+
+## Dependencies
+
+From `requirements.txt`:
+
+- `fastapi==0.111.0`
+- `uvicorn==0.29.0`
+- `python-multipart==0.0.9`
+- `opencv-python==4.9.0.80`
+- `numpy==1.26.4`
+
+## Important notes
+
+- This system is intended for preliminary structural analysis.
+- Generated recommendations and reports should be reviewed by a licensed structural engineer before real-world execution.
+- Cost outputs are indicative and region/site dependent.
+
+## License
+
+ISC
